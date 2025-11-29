@@ -112,10 +112,16 @@
 
         .password-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .password-row {
+            display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 20px;
         }
 
         .password-box {
@@ -270,8 +276,8 @@
     <div class="top-nav">
         <div class="nav-title">裘庄电子档案馆 - 隐藏任务</div>
         <div class="nav-links">
-            <a href="secret_archive.html">返回绝密档案库</a>
-            <a href="game.html">返回首页</a>
+            <a href=" ">返回绝密档案库</a >
+            <a href="game.html">返回首页</a >
         </div>
     </div>
 
@@ -280,12 +286,12 @@
         
         <div class="mission-info">
             <div class="mission-instructions">
-                <p>请根据工作细则中的说明和考勤表中的线索，结合绝密档案，破译出最终的8字密文。</p>
+                <p>请根据工作细则中的说明和考勤表中的线索，结合绝密档案，破译出最终的8字密文。</p >
             </div>
             
             <div class="mission-card">
                 <h2>最终密文</h2>
-                <p>请输入破译出的8个汉字：</p>
+                <p>请输入破译出的8个汉字：</p >
                 <div class="text-input-section">
                     <div class="password-container" id="passwordContainer">
                         <!-- 密码框将通过JavaScript生成 -->
@@ -298,8 +304,8 @@
         </div>
 
         <div class="footer">
-            <p>裘庄电子档案馆 © 1999 版权所有</p>
-            <p>最后更新: 1999-12-20 | 安全等级：绝密</p>
+            <p>裘庄电子档案馆 © 1999 版权所有</p >
+            <p>最后更新: 1999-12-20 | 安全等级：绝密</p >
         </div>
     </div>
 
@@ -307,18 +313,35 @@
         // 正确的最终答案
         const correctFinalAnswer = '密铸青史暗夜长明';
         
-        // 初始化密码输入框
+        // 初始化密码输入框 - 改为上下两排各4个字
         function initPasswordContainer() {
             const passwordContainer = document.getElementById('passwordContainer');
             passwordContainer.innerHTML = '';
             
-            for (let i = 0; i < 8; i++) {
+            // 创建第一排（4个字）
+            const row1 = document.createElement('div');
+            row1.className = 'password-row';
+            for (let i = 0; i < 4; i++) {
                 const box = document.createElement('div');
                 box.className = 'password-box';
                 box.dataset.index = i;
-                box.textContent = i < 4 ? '＿' : '＿'; // 使用全角下划线
-                passwordContainer.appendChild(box);
+                box.textContent = '＿'; // 使用全角下划线
+                row1.appendChild(box);
             }
+            
+            // 创建第二排（4个字）
+            const row2 = document.createElement('div');
+            row2.className = 'password-row';
+            for (let i = 4; i < 8; i++) {
+                const box = document.createElement('div');
+                box.className = 'password-box';
+                box.dataset.index = i;
+                box.textContent = '＿'; // 使用全角下划线
+                row2.appendChild(box);
+            }
+            
+            passwordContainer.appendChild(row1);
+            passwordContainer.appendChild(row2);
             
             // 添加点击事件
             document.querySelectorAll('.password-box').forEach(box => {
