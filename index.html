@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏公告与免责声明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 28px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin: 20px 0 10px;
+            font-size: 20px;
+            border-bottom: 1px solid #dddddd;
+            padding-bottom: 5px;
+        }
+        
+        .warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning strong {
+            color: #e65100;
+        }
+        
+        .requirements {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .start-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+        }
+        
+        .start-button {
+            display: inline-block;
+            background: #3498db;
+            color: #ffffff;
+            padding: 14px 40px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 1px solid #2980b9;
+            margin-top: 10px;
+        }
+        
+        .start-button:hover {
+            background: #2980b9;
+            border-color: #2471a3;
+        }
+        
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .start-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>游戏提示与免责声明</h1>
+            
+            <div class="warning">
+                <p><strong>本游戏内容均为虚构，其中某些历史语境下的特定用语仅用于还原背景，人物、事件、机构名称等均为虚构，如有雷同纯属巧合。</strong></p>
+            </div>
+            
+            <h2>游玩前提醒：</h2>
+            <p>游戏中包含一些需要在浏览器自行查询的内容，在必要时请离开游戏寻找！</p>
+            <p>过程中请自行探索寻找谜题，建议记录关键词包含文字及数字，建议截图保留图片线索</p>
+            <p></p>
+            <p>☁️彩蛋：如仔细阅读可发现大量云次方衍生角色相关内容^_^（与解密无关）</p>
+
+            
+            <div class="start-section">
+                <p>在保证所有提示阅读完后，点此处开始游戏：</p>
+                <!-- 在index.html中修改这一行 -->
+<a href="game.html" class="start-button">开始游戏</a>
+            </div>
+            
+            <div class="footer-note">
+                <p>© 2025 裘庄电子档案馆 | 本页面仅为示例用途</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

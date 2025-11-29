@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裘庄电子档案馆</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "宋体", SimSun, serif;
+            font-size: 16px;
+            color: #3e3e3e;
+            background-color: #d4c9b8;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect fill="%238B4513" width="100" height="100"/></svg>');
+        }
+
+        .top-nav {
+            background-color: #5d4037;
+            color: #fff;
+            padding: 12px 15px;
+            border-bottom: 3px solid #8d6e63;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            text-align: center;
+            color: #ffecb3;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #ffecb3;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 6px 12px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-decoration: none;
+            color: #5d4037;
+            background-color: #ffecb3;
+            border: 1px solid #8d6e63;
+        }
+
+        .main-content {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #f5f0e6;
+            padding: 20px 15px;
+            border-left: 1px solid #a1887f;
+            border-right: 1px solid #a1887f;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #5d4037;
+            text-align: center;
+            font-size: 1.8em;
+            margin: 15px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8d6e63;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #5d4037;
+            font-size: 1.4em;
+            margin: 25px 0 18px 0;
+            padding-left: 15px;
+            border-left: 5px solid #8d6e63;
+            background: linear-gradient(to right, rgba(141, 110, 99, 0.1), transparent);
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        p {
+            margin: 15px 0;
+            padding: 0 10px;
+            text-align: justify;
+        }
+
+        .category-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 25px 0;
+        }
+
+        .category-item {
+            margin-bottom: 12px;
+            background-color: #ede7d6;
+            border: 1px solid #bcaaa4;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            padding: 14px 15px 14px 45px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%235d4037" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') no-repeat 20px center;
+            cursor: pointer;
+            font-weight: bold;
+            color: #5d4037;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .category-header:hover {
+            background-color: #e6dcc9;
+        }
+
+        .category-header::after {
+            content: "▶";
+            position: absolute;
+            right: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-item.active .category-header::after {
+            transform: rotate(90deg);
+        }
+
+        .sub-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #f8f5ef;
+            border-top: 1px solid #d7ccc8;
+            display: none;
+        }
+
+        .sub-list.active {
+            display: block;
+        }
+
+        .sub-item {
+            padding: 12px 15px 12px 55px;
+            border-bottom: 1px solid #e0d6cc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%235d4037" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>') no-repeat 35px center;
+            position: relative;
+        }
+
+        .sub-item:hover {
+            background-color: #f0e9dd;
+            color: #5d4037;
+            padding-left: 60px;
+        }
+
+        .sub-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-list small {
+            color: #d32f2f;
+            font-weight: bold;
+            margin-left: 8px;
+            background-color: #ffebee;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* 密码输入框样式 */
+        .password-prompt {
+            display: none;
+            margin: 25px 0;
+            padding: 25px;
+            background: #ede7d6;
+            border: 2px solid #8d6e63;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .password-prompt p {
+            color: #5d4037;
+            font-weight: bold;
+            margin-bottom: 18px;
+            font-size: 1.1em;
+        }
+
+        .password-input {
+            padding: 12px;
+            width: 220px;
+            border: 1px solid #a1887f;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+            background-color: #fff;
+            font-family: "宋体", SimSun, serif;
+        }
+
+        .password-btn {
+            margin-left: 12px;
+            padding: 12px 24px;
+            background: #5d4037;
+            color: #ffecb3;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "宋体", SimSun, serif;
+            transition: all 0.3s ease;
+        }
+
+        .password-btn:hover {
+            background: #8d6e63;
+            transform: translateY(-2px);
+        }
+
+        .password-error {
+            color: #d32f2f;
+            margin-top: 12px;
+            display: none;
+            font-weight: bold;
+        }
+
+        /* 图片查看器样式 */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .image-viewer.active {
+            display: flex;
+        }
+
+        .image-container {
+            max-width: 90%;
+            max-height: 80%;
+            text-align: center;
+            border: 3px solid #8d6e63;
+            border-radius: 5px;
+            background-color: #000;
+            padding: 5px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .image-title {
+            color: #ffecb3;
+            margin-top: 20px;
+            font-size: 1.3em;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: #ffecb3;
+            font-size: 2.5em;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #795548;
+            border-top: 2px solid #bcaaa4;
+            padding-top: 20px;
+        }
+
+        /* 图片查看器导航按钮 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(93, 64, 55, 0.8);
+            color: #ffecb3;
+            border: none;
+            font-size: 2em;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: none;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(141, 110, 99, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 40px;
+        }
+
+        .next-btn {
+            right: 40px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                font-size: 15px;
+                padding: 25px;
+            }
+            
+            .top-nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 25px;
+                height: 50px;
+            }
+            
+            .nav-title {
+                font-size: 1.4em;
+                text-align: left;
+            }
+            
+            .nav-links {
+                gap: 35px;
+            }
+            
+            .main-content {
+                width: 90%;
+                max-width: 900px;
+                padding: 35px;
+                border: 2px solid #a1887f;
+                margin: 25px auto;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .category-header {
+                padding: 12px 15px 12px 40px;
+                background-position: 15px center;
+            }
+            
+            .sub-item {
+                padding: 10px 15px 10px 50px;
+                background-position: 30px center;
+            }
+        }
+
+        @media (max-width: 767px) and (orientation: landscape) {
+            .top-nav {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 8px 15px;
+            }
+            
+            .nav-title {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 5px 8px;
+                font-size: 0.95em;
+            }
+            
+            .main-content {
+                padding: 15px 10px;
+            }
+            
+            .password-input {
+                width: 180px;
+            }
+            
+            .nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5em;
+            }
+            
+            .prev-btn {
+                left: 15px;
+            }
+            
+            .next-btn {
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="nav-title">裘庄电子档案馆</div>
+        <div class="nav-links">
+            <a href="game.html">首页</a>
+            <a href="attachments.html">附件</a>
+            <a href="gonggao.html">公告</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>档案资料查询系统</h1>
+        
+        <p>欢迎访问裘庄电子档案馆。本馆致力于保存和提供与裘庄相关的重要历史文献与数字资料。</p>
+        
+        <p><strong>最新公告</strong>: 系统将于本月20日进行维护，届时将暂停服务。</p>
+        <p><strong>档案管理员提示</strong>：如果您在系统操作中有困难，建议查阅<strong>「公告-操作指南」</strong>。</p>
+
+        <h2>档案目录</h2>
+        <ul class="category-list">
+            <li class="category-item">
+                <div class="category-header" onclick="toggleSubList('newspapers')">
+                     报刊
+                </div>
+                <ul id="newspapers" class="sub-list">
+                    <li class="sub-item" onclick="showNewspaper('《大阪每日新闻》')">《大阪每日新闻》</li>
+                    <li class="sub-item" onclick="showNewspaper('《时事新报》')">《时事新报》</li>
+                    <li class="sub-item" onclick="showNewspaper('《杭州新报》')">《杭州新报》</li>
+                    <li class="sub-item" onclick="showNewspaper('《力报》')">《力报》</li>
+                </ul>
+            </li>
+            <li class="category-item">
+                <div class="category-header" onclick="showPasswordPrompt()">
+                     绝密档案 <small>[需权限]</small>
+                </div>
+            </li>
+        </ul>
+
+        <!-- 密码输入框 -->
+        <div id="passwordPrompt" class="password-prompt">
+            <p>请输入权限验证密码：</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="输入密码">
+            <button onclick="checkPassword()" class="password-btn">确认</button>
+            <p id="passwordError" class="password-error">密码错误，请重试。</p>
+            <!-- 添加的提示行 -->
+            <p style="color: #795548; font-size: 0.9em; margin-top: 15px; font-style: italic;">
+                密码为【裘庄捉鬼】事件发生年份
+            </p>
+        </div>
+
+        <p>请点击以上分类浏览具体档案内容。部分敏感档案需要特定权限方可访问。</p>
+
+        <div class="footer">
+            <p>裘庄电子档案馆 © 1999 版权所有</p>
+            <p>最后更新: 1999-12-20 | 访问次数: <span id="visitCount">8853</span></p>
+        </div>
+    </div>
+
+    <!-- 图片查看器 -->
+    <div id="imageViewer" class="image-viewer">
+        <button class="close-btn" onclick="closeImage()">×</button>
+        
+        <!-- 切换按钮 -->
+        <button class="nav-btn prev-btn" id="prevBtn" onclick="prevImage()">‹</button>
+        <button class="nav-btn next-btn" id="nextBtn" onclick="nextImage()">›</button>
+        
+        <div class="image-container">
+            <img id="viewerImage" src="" alt="">
+        </div>
+        <div class="image-title" id="imageTitle"></div>
+    </div>
+
+    <script>
+        // ========== 报纸图片功能 ==========
+
+        // 报纸图片数据配置
+        const newspaperImages = {
+            '《大阪每日新闻》': [
+                'images/osaka_news_1.jpg',
+                'images/osaka_news_2.jpg'
+            ],
+            '《时事新报》': [
+                'images/jiji_shinpo_1.jpg',
+                'images/jiji_shinpo_2.jpg'
+            ],
+            '《杭州新报》': [
+                'images/hangzhou_news_1.jpg',
+                'images/hangzhou_news_2.jpg'
+            ],
+            '《力报》': [
+                'images/li_news_1.jpg',
+                'images/li_news_2.jpg'
+            ]
+        };
+
+        let currentNewspaper = '';
+        let currentImageIndex = 0;
+
+        // 显示报纸图片
+        function showNewspaper(title) {
+            currentNewspaper = title;
+            currentImageIndex = 0;
+            
+            document.getElementById('imageTitle').textContent = title + ' (1/2)';
+            document.getElementById('viewerImage').src = newspaperImages[title][0];
+            document.getElementById('imageViewer').classList.add('active');
+            
+            // 显示切换按钮
+            document.getElementById('prevBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        // 切换到下一张图片
+        function nextImage() {
+            if (currentNewspaper && newspaperImages[currentNewspaper]) {
+                currentImageIndex = (currentImageIndex + 1) % newspaperImages[currentNewspaper].length;
+                document.getElementById('viewerImage').src = newspaperImages[currentNewspaper][currentImageIndex];
+                document.getElementById('imageTitle').textContent = currentNewspaper + ` (${currentImageIndex + 1}/${newspaperImages[currentNewspaper].length})`;
+            }
+        }
+
+        // 切换到上一张图片
+        function prevImage() {
+            if (currentNewspaper && newspaperImages[currentNewspaper]) {
+                currentImageIndex = (currentImageIndex - 1 + newspaperImages[currentNewspaper].length) % newspaperImages[currentNewspaper].length;
+                document.getElementById('viewerImage').src = newspaperImages[currentNewspaper][currentImageIndex];
+                document.getElementById('imageTitle').textContent = currentNewspaper + ` (${currentImageIndex + 1}/${newspaperImages[currentNewspaper].length})`;
+            }
+        }
+
+        // 关闭图片查看器
+        function closeImage() {
+            document.getElementById('imageViewer').classList.remove('active');
+            document.getElementById('viewerImage').src = '';
+            currentNewspaper = '';
+            currentImageIndex = 0;
+            
+            // 隐藏切换按钮
+            document.getElementById('prevBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        // 访问次数计数器
+        window.onload = function() {
+            let count = localStorage.getItem('visitCount');
+            count = count ? parseInt(count) + 1 : 8853;
+            localStorage.setItem('visitCount', count);
+            document.getElementById('visitCount').textContent = count;
+        }
+
+        // 切换下拉列表显示/隐藏
+        function toggleSubList(id) {
+            const subList = document.getElementById(id);
+            subList.classList.toggle('active');
+            
+            // 切换父元素的active类
+            const parentItem = subList.parentElement;
+            parentItem.classList.toggle('active');
+        }
+
+        // 显示密码输入框
+        function showPasswordPrompt() {
+            document.getElementById('passwordPrompt').style.display = 'block';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        // 检查密码
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('passwordError');
+            
+            if (input === '1941') {
+                // 密码正确，跳转到绝密档案页面
+                alert('密码正确！正在进入绝密档案...');
+                window.location.href = 'top_secret.html';
+            } else {
+                // 密码错误
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // 按回车键也可以提交密码
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // 点击图片查看器背景也可关闭
+        document.getElementById('imageViewer').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImage();
+            }
+        });
+    </script>
+</body>
+</html>

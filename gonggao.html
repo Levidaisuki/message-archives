@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告 - 裘庄电子档案馆</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "宋体", SimSun, serif;
+            font-size: 16px;
+            color: #3e3e3e;
+            background-color: #d4c9b8;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect fill="%238B4513" width="100" height="100"/></svg>');
+        }
+
+        .top-nav {
+            background-color: #5d4037;
+            color: #fff;
+            padding: 12px 15px;
+            border-bottom: 3px solid #8d6e63;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            text-align: center;
+            color: #ffecb3;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #ffecb3;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 6px 12px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            text-decoration: none;
+            color: #5d4037;
+            background-color: #ffecb3;
+            border: 1px solid #8d6e63;
+        }
+
+        .main-content {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #f5f0e6;
+            padding: 20px 15px;
+            border-left: 1px solid #a1887f;
+            border-right: 1px solid #a1887f;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #5d4037;
+            text-align: center;
+            font-size: 1.8em;
+            margin: 15px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8d6e63;
+            letter-spacing: 2px;
+        }
+
+        .announcement-section {
+            margin: 25px 0;
+            background: #ede7d6;
+            border: 1px solid #bcaaa4;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #e6dcc9;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: #d7ccc8;
+        }
+
+        .section-header h2 {
+            color: #5d4037;
+            font-size: 1.4em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8f6f2;
+        }
+
+        .announcement-section.active .section-content {
+            max-height: 1000px;
+        }
+
+        .announcement-section.active .toggle-icon {
+            transform: rotate(90deg);
+        }
+
+        .guide-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 25px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: #f5f0e6;
+            border-radius: 5px;
+            border-left: 3px solid #8d6e63;
+        }
+
+        .step-number {
+            background: #5d4037;
+            color: #ffecb3;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #3e3e3e;
+        }
+
+        .disclaimer-content {
+            background: #fffaf0;
+            border: 2px solid #d32f2f;
+            padding: 25px;
+            border-radius: 5px;
+            color: #5d4037;
+            margin: 25px;
+        }
+
+        .disclaimer-content p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #795548;
+            border-top: 2px solid #bcaaa4;
+            padding-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                font-size: 15px;
+                padding: 25px;
+            }
+            
+            .top-nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 25px;
+                height: 50px;
+            }
+            
+            .nav-title {
+                font-size: 1.4em;
+                text-align: left;
+            }
+            
+            .nav-links {
+                gap: 35px;
+            }
+            
+            .main-content {
+                width: 90%;
+                max-width: 900px;
+                padding: 35px;
+                border: 2px solid #a1887f;
+                margin: 25px auto;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 15px 10px;
+            }
+            
+            .section-header {
+                padding: 15px;
+            }
+            
+            .guide-steps {
+                padding: 20px;
+            }
+            
+            .step {
+                padding: 12px;
+            }
+            
+            .disclaimer-content {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="nav-title">裘庄电子档案馆</div>
+        <div class="nav-links">
+            <a href="game.html">首页</a>
+            <a href="attachments.html">附件</a>
+            <a href="gonggao.html">公告</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>系统公告</h1>
+
+        <!-- 操作指南 -->
+        <div class="announcement-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📋 操作指南</h2>
+                <span class="toggle-icon">▶</span>
+            </div>
+            <div class="section-content">
+                <div class="guide-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p><strong>访问档案</strong> - 在首页点击相应分类浏览档案内容，所有档案图片均可放大</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p><strong>填写档案</strong> - 在敌特档案中根据线索填写正确的日期和笔名信息（请阅读报纸中的重点内容，大部分不重要的内容已模糊处理）</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p><strong>查阅附件</strong> - 附件也十分重要，在附件页面查看工作细则和考勤表，寻找解密线索</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <p><strong>破解密文</strong> - 完成档案验证后，进入隐藏任务破译最终密文</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <p><strong>使用工具</strong> - 在工作细则页面使用中文电码查询工具辅助解密</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <!-- 免责声明 -->
+        <div class="announcement-section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>⚠️ 免责声明</h2>
+                <span class="toggle-icon">▶</span>
+            </div>
+            <div class="section-content">
+                <div class="disclaimer-content">
+                    <p><strong>本档案馆内容均为虚构，所有内容仅供个人演示使用。</strong></p>
+                    <p>其中某些历史语境下的特定用语仅用于还原背景，人物、事件、机构名称等均为虚构，如有雷同纯属巧合。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>裘庄电子档案馆 © 1999 版权所有</p>
+            <p>最后更新: 1999-12-20</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
